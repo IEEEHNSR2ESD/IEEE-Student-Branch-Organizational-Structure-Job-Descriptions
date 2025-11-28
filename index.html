@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEEE Student Branch - Organizational Chart</title>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .font-arabic {
+            font-family: 'Amiri', serif;
+            direction: rtl;
+        }
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+
+        const OrgChart = () => {
+            const [expandedNodes, setExpandedNodes] = useState({});
+
+            const toggleNode = (id) => {
+                setExpandedNodes(prev => ({
+                    ...prev,
+                    [id]: !prev[id]
+                }));
+            };
+
+            const ChevronDown = () => (
+                <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+            );
+
+            const ChevronUp = () => (
+                <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                </svg>
+            );
+
+            const Users = ({ size = 24, className = "" }) => (
+                <svg className={className} width={size} height={size} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            );
+
+            const Wrench = ({ size = 24 }) => (
+                <svg width={size} height={size} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            );
+
+            const FileText = ({ size = 24 }) => (
+                <svg width={size} height={size} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            );
+
+            const Handshake = ({ size = 24 }) => (
+                <svg width={size} height={size} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                </svg>
+            );
+
+            const UserPlus = ({ size = 24 }) => (
+                <svg width={size} height={size} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                </svg>
+            );
+
+            const Package = ({ size = 24 }) => (
+                <svg width={size} height={size} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                </svg>
+            );
+
+            const roles = {
+                tech: {
+                    title: "Technical Activities Head",
+                    titleAr: "مشرف الجانب العلمي",
+                    Icon: Wrench,
+                    color: "bg-blue-500",
+                    sub: [
+                        { 
+                            title: "Education Team",
+                            titleAr: "منسق المحتوى التعليمي",
+                            desc: ["Propose workshop topics", "Prepare educational roadmap", "Coordinate with trainers"]
+                        },
+                        { 
+                            title: "Competitions Team",
+                            titleAr: "مسؤول المسابقات والمشاريع",
+                            desc: ["Design engineering competitions", "Support member projects", "Prepare judging criteria"]
+                        }
+                    ]
+                },
+                pub: {
+                    title: "Publications Head",
+                    titleAr: "مشرف المحتوى والنشر",
+                    Icon: FileText,
+                    color: "bg-purple-500",
+                    sub: [
+                        { 
+                            title: "Editorial Team",
+                            titleAr: "محرر ومكاتب مقالات",
+                            desc: ["Write technical articles", "Translate IEEE news"]
+                        },
+                        { 
+                            title: "Media & Design",
+                            titleAr: "مصمم وسائط متعددة",
+                            desc: ["Design posters", "Produce videos"]
+                        }
+                    ]
+                },
+                ext: {
+                    title: "External Relations Head",
+                    titleAr: "مشرف الضيوف والشركات",
+                    Icon: Handshake,
+                    color: "bg-green-500",
+                    sub: [
+                        { 
+                            title: "PR & Speakers",
+                            titleAr: "مسؤول العلاقات العامة",
+                            desc: ["Communicate with guests", "Write official invitations"]
+                        },
+                        { 
+                            title: "Industry & Sponsors",
+                            titleAr: "مسؤول الرعاية والشراكات",
+                            desc: ["Prepare sponsorship file", "Communicate with companies"]
+                        }
+                    ]
+                },
+                md: {
+                    title: "Membership Development (MD)",
+                    titleAr: "مشرف الأعضاء والموارد البشرية",
+                    Icon: UserPlus,
+                    color: "bg-orange-500",
+                    sub: [
+                        { 
+                            title: "HR & Team Building",
+                            titleAr: "مسؤول الموارد البشرية",
+                            desc: ["Follow up member integration", "Resolve issues"]
+                        }
+                    ]
+                },
+                log: {
+                    title: "Logistics Head",
+                    titleAr: "مشرف العمليات والتنظيم",
+                    Icon: Package,
+                    color: "bg-red-500",
+                    sub: [
+                        { 
+                            title: "Operations",
+                            titleAr: "مسؤول التنظيم والعمليات",
+                            desc: ["Book halls", "Purchase supplies"]
+                        }
+                    ]
+                }
+            };
+
+            const RoleCard = ({ id, role }) => {
+                const isExpanded = expandedNodes[id];
+                const IconComponent = role.Icon;
+
+                return (
+                    <div className="mb-4">
+                        <button
+                            onClick={() => toggleNode(id)}
+                            className={`w-full ${role.color} text-white rounded-lg p-4 shadow-lg hover:shadow-xl transition-all transform hover:scale-105`}
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <IconComponent size={24} />
+                                    <div className="text-left">
+                                        <div className="font-bold text-lg">{role.title}</div>
+                                        <div className="text-sm opacity-90 font-arabic">{role.titleAr}</div>
+                                    </div>
+                                </div>
+                                {isExpanded ? <ChevronUp /> : <ChevronDown />}
+                            </div>
+                        </button>
+                        
+                        {isExpanded && (
+                            <div className="mt-2 space-y-2 ml-4">
+                                {role.sub.map((subRole, idx) => (
+                                    <div key={idx} className="bg-white border-l-4 border-gray-300 rounded-r-lg p-4 shadow">
+                                        <div className="font-semibold text-gray-800">{subRole.title}</div>
+                                        <div className="text-sm text-gray-600 mb-2 font-arabic">{subRole.titleAr}</div>
+                                        <ul className="text-sm text-gray-700 space-y-1">
+                                            {subRole.desc.map((item, i) => (
+                                                <li key={i} className="flex items-start gap-2">
+                                                    <span className="text-blue-500 mt-1">•</span>
+                                                    <span>{item}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                );
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-xl shadow-2xl p-8 mb-8 text-center">
+                            <Users size={48} className="mx-auto mb-4 text-blue-600" />
+                            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+                                IEEE Student Branch
+                            </h1>
+                            <h2 className="text-2xl text-gray-600">Organizational Structure</h2>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl shadow-2xl p-6 mb-8 text-center">
+                            <h3 className="text-2xl font-bold mb-2">Executive Committee (ExCom)</h3>
+                            <p className="text-lg opacity-90">Chair • Vice Chair • Secretary • Treasurer</p>
+                        </div>
+
+                        <div className="space-y-6">
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <RoleCard id="tech" role={roles.tech} />
+                                <RoleCard id="pub" role={roles.pub} />
+                            </div>
+                            
+                            <div className="grid md:grid-cols-2 gap-6">
+                                <RoleCard id="ext" role={roles.ext} />
+                                <RoleCard id="md" role={roles.md} />
+                            </div>
+                            
+                            <RoleCard id="log" role={roles.log} />
+                        </div>
+
+                        <div className="mt-8 text-center text-gray-600 text-sm">
+                            <p>Click on each department to view roles and responsibilities</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<OrgChart />, document.getElementById('root'));
+    </script>
+</body>
+</html>
